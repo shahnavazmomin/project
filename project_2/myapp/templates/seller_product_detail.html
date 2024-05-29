@@ -1,0 +1,57 @@
+{% extends 'seller_header.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+   
+  </head>
+  <body>
+
+  
+    
+    <section id="selling-products" class="product-store bg-light-grey padding-large">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Product Details</h2>
+        </div>
+        <ul class="tabs list-unstyled">
+          <li data-tab-target="#all" class="active tab">All</li>
+          
+        </ul>
+        <div class="tab-content">
+          <div id="all" data-tab-content class="active">
+            <div class="row d-flex flex-wrap">
+              
+              <div class="product-item col-lg-3 col-md-6 col-sm-6">
+                <div class="image-holder">
+                  <img src="{{product.product_picture.url}}" style="width: 250px; height: 300px;" alt="Books" class="product-image">
+                </div>
+               
+                
+              </div>
+             
+             <div class="product-item col-lg-3 col-md-6 col-sm-6">
+               
+                <div class="product-detail">
+                  <h3 class="product-title">
+                    <a href="single-product.html">{{product.product_name}}</a>
+                  </h3>
+                  <div>Price: {{product.product_price}}</div>
+                  <div>Size : {{product.product_size}}</div>
+                  <div>Color: {{product.product_color}}</div>
+                  <div>Details: {{product.product_desc}}</div>
+                <a href="{% url 'seller_product_edit' pk=product.pk %}"><input type="button" value="EDIT" class="btn btn-primary"></a>
+                <a href="{% url 'seller_product_delete' pk=product.pk %}"><input type="button" value="DELETE" class="btn btn-danger"></a>
+                </div>
+              
+              
+              
+    </section>
+
+   
+ 
+ 
+  </body>
+</html>
+{% endblock %}

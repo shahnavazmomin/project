@@ -1,0 +1,68 @@
+{% extends 'header.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+   
+  </head>
+  <body>
+
+  
+    
+    <section id="selling-products" class="product-store bg-light-grey padding-large">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">My Product</h2>
+        </div>
+        <ul class="tabs list-unstyled">
+          <li class="active tab"><a href="{% url 'seller_view_product_specific' cat='all' %}">All</a></li>
+          <li class="active tab"><a href="{% url 'seller_view_product_specific' cat='Men' %}">Men</a></li>
+          <li class="active tab"><a href="{% url 'seller_view_product_specific' cat='Women' %}">Women</a></li>
+          <li class="active tab"><a href="{% url 'seller_view_product_specific' cat='Kids' %}">Kids</a></li>
+          
+          
+        </ul>
+        <div class="tab-content">
+          <div id="all" data-tab-content class="active">
+            <div class="row d-flex flex-wrap">
+              {% for i in products%}
+              <div class="product-item col-lg-3 col-md-6 col-sm-6">
+                <div class="image-holder">
+                  <img src="{{i.product_picture.url}}" style="width: 250px; height: 300px;" alt="Books" class="product-image">
+                </div>
+                <div class="cart-concern">
+                  <div class="cart-button d-flex justify-content-between align-items-center">
+                    {% if request.session.email%}
+                      <a href="{% url 'seller_product_detail' pk=i.pk %}">
+                         <button type="button" class="view-btn tooltip
+                           d-flex">
+                         <i>Quick view </i>
+                        </button>
+                      </a>
+                    {% else %}
+                       <a href="{% url 'login' %}">
+                          <button type="button" class="view-btn tooltip
+                             d-flex">
+                          <i>Login </i>
+                      </button>
+                    </a>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="product-detail">
+                  <h3 class="product-title">
+                    <a href="single-product.html">{{i.product_name}}</a>
+                  </h3>
+                  <div class="item-price text-primary">RS {{i.product_price}}</div>
+                </div>
+              </div>
+              {% endfor %}
+              
+              
+              
+    </section>
+ 
+  </body>
+</html>
+{% endblock %}

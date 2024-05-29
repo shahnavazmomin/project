@@ -1,0 +1,68 @@
+{% extends 'header.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+   
+  </head>
+  <body>
+
+  
+    
+    <section id="selling-products" class="product-store bg-light-grey padding-large">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Product Details</h2>
+        </div>
+        
+        <div class="tab-content">
+          <div id="all" data-tab-content class="active">
+            <div class="row d-flex flex-wrap">
+              
+              <div class="product-item col-lg-3 col-md-6 col-sm-6">
+                <div class="image-holder">
+                  <img src="{{product.product_picture.url}}" style="width: 250px; height: 300px;" alt="Books" class="product-image">
+                </div>
+               
+                
+              </div>
+             
+             <div class="product-item col-lg-6 col-md-6 col-sm-6">
+               
+                <div class="product-detail">
+                  <h3 class="product-title">
+                    <a href="single-product.html">{{product.product_name}}</a>
+                  </h3>
+                  <div>Price: {{product.product_price}}</div>
+                  <div>Size : {{product.product_size}}</div>
+                  <div>Color: {{product.product_color}}</div>
+                  <div>Details: {{product.product_desc}}</div>
+                </div>
+                
+                
+                {% if cart_flag == False %}
+                   <a href="{% url 'add_to_cart' pk=product.pk %}"><input type="button" value="Add To Cart" class="btn btn-primary"></a>
+                {% else %}
+                     <a href="{% url 'remove_from_cart' pk=product.pk %}"><input type="button" value="Remove From Cart" class="btn btn-danger"></a>
+                {% endif %}
+                {% if wishlist_flag == False %}
+                   <a href="{% url 'add_to_wishlist' pk=product.pk %}"><input type="button" value="Add To Wishlists" class="btn btn-primary"></a>
+                {% else %}
+                     <a href="{% url 'remove_from_wishlist' pk=product.pk %}"><input type="button" value="Remove From Wishlist" class="btn btn-danger"></a>
+                {% endif %}
+
+                </div>
+              </div>
+            </div>
+          </div>
+              
+              
+    </section>
+
+   
+ 
+ 
+  </body>
+</html>
+{% endblock %}

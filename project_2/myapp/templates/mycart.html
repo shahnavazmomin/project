@@ -1,0 +1,112 @@
+{% extends 'header.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+     <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+
+  
+    
+    <section id="selling-products" class="product-store bg-light-grey padding-large">
+      <div class="container">
+        <div class="section-header">
+          {% if carts %}
+            <h2 class="section-title">My Cart</h2>
+          {% else %}
+            <h2 class="section-title">No Products In  Cart</h2>
+          {% endif %}
+        </div> 
+        <div class="tab-content">
+          <div id="all" data-tab-content class="active">
+            <div class="row d-flex flex-wrap">
+              {% for i in carts %}
+              <div class="product-item col-lg-3 col-md-6 col-sm-6">
+                <div class="image-holder">
+                  <img src="{{i.product.product_picture.url}}" style="width: 250px; height: 300px;" alt="Books" class="product-image">
+                </div>
+                <div class="cart-concern">
+                  <div class="cart-button d-flex justify-content-between align-items-center">
+                    {% if request.session.email%}
+                      <a href="{% url 'seller_product_detail' pk=i.product.pk %}">
+                         <button type="button" class="view-btn tooltip
+                           d-flex">
+                         <i>Quick view </i>
+                        </button>
+                      </a>
+                    {% else %}  
+                       <a href="{% url 'login' %}">
+                          <button type="button" class="view-btn tooltip
+                             d-flex">
+                          <i>Login </i>
+                      </button>
+                    </a>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="product-detail">
+                  <h3 class="product-title">
+                    <a href="single-product.html">Name :{{i.product.product_name}}</a>
+                  </h3>
+                  <div class="item-price text-primary">Price :{{i.product.product_price}}</div>
+                  <div class="item-price text-primary">
+                    <form name="change_qty" method="post" action="{% url 'change_qty' %}">
+                      {% csrf_token %}
+                      Qty : <input type="number" min="1" max="10" name=product_qty value="{{i.product_qty}}" onchange="this.form.submit();">
+                      <input type="hidden" name="pk" value="{{i.pk}}">
+                    </form>
+                  </div>
+                  <div class="item-price text-primary">Total Price :{{i.total_price}}</div>
+                </div>
+              </div>
+              {% endfor %}
+            
+              {% if carts %}
+                  <form method="post">
+                      <h1>Net Price : {{net_price}}</h1>
+                      <input type="hidden" id="net_price" name="amount" value="{{net_price}}">
+                      <button type="button" class="btn btn-lg btn-primary" id="checkout-button">Checkout</button>
+                  </form>
+              {% endif %}
+              
+    </section>
+
+   
+ 
+      <script type="text/javascript">
+
+var stripe = Stripe('pk_test_51MshH6SJuXwPfjjrrgxJ5tubbOgYAhRrqNcd4RDUSq1peWpIMZrjhIiTncSUWO9u6byeDf4KxdZPkFD4hU55mVOg00aRL5RT8x');
+var checkoutButton = document.getElementById('checkout-button');
+
+checkoutButton.addEventListener('click', function() { 
+ fetch('/create-checkout-session/', {
+ method: 'POST',
+    headers:{
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',},
+    body: JSON.stringify({'post_data':'{{net_price}}'})
+  })
+ .then(function(response) {
+ return response.json();
+ })
+ .then(function(session) {
+ return stripe.redirectToCheckout({ sessionId: session.id });
+ })
+ .then(function(result) {
+ // If `redirectToCheckout` fails due to a browser or network
+ // error, you should display the localized error message to your
+ // customer using `error.message`.
+ if (result.error) {
+ alert(result.error.message);
+ }
+ })
+ .catch(function(error) {
+ console.error('Error:', error);
+ });
+ });
+ </script>
+  </body>
+</html>
+{% endblock %}

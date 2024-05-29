@@ -1,0 +1,140 @@
+{% extends 'seller_header.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+  </head>
+  <body>
+
+    <section class="site-banner jarallax padding-large" style="background: url({% static 'images/hero-image.jpg' %}) no-repeat; background-position: top;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 class="page-title">Edit Product</h1>
+            <div class="breadcrumbs">
+              <span class="item">
+                <a href="index.html">Home /</a>
+              </span>
+              <span class="item">Edit Product</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-information padding-large">
+      <div class="container">
+        <div class="row">
+         
+          <div class="col-md-12">
+            <div class="contact-information">
+              <div class="section-header">
+                <h2 class="section-title">Add Product</h2>
+              </div>
+              {% if msg %}
+                <b style="color: blue;">{{msg}}</b>
+              {% endif %}
+              <form name="contactform" action="{% url 'seller_product_edit' pk=product.pk %}" method="post" class="contact-form" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-item">
+                  <select name="product_category" class="u-full-width bg-light">
+                    {% if product.product_category == "Men" %}
+                      <option>---Select Category---</option>
+                      <option value="Men" selected>Men</option>
+                      <option value="Women">Women</option>
+                      <option value="Kids">Kids</option>
+                    {% elif product.product_category == "Women" %}
+                      <option>---Select Category---</option>
+                      <option value="Men">Men</option>
+                      <option value="Women" selected>Women</option>
+                      <option value="Kids">Kids</option>
+                    {% elif product.product_category == "Kids" %}
+                      <option>---Select Category---</option>
+                      <option value="Men">Men</option>
+                      <option value="Women">Women</option>
+                      <option value="Kids" selected>Kids</option>
+                    {% endif %}
+                  </select>
+                  <select name="product_size" class="u-full-width bg-light">
+                    {% if product.product_size == "S" %}
+                      <option>---Select Product Size---</option>
+                      <option value="S" selected>S</option>
+                      <option value="M">M</option>
+                      <option value="L">L</option>
+                      <option value="XL">XL</option>
+                      <option value="XXL">XXL</option>
+                    {% elif product.product_size == "M"%}
+                      <option>---Select Product Size---</option>
+                      <option value="S">S</option>
+                      <option value="M" selected>M</option>
+                      <option value="L">L</option>
+                      <option value="XL">XL</option>
+                      <option value="XXL">XXL</option>
+                    {% elif product.product_size == "L" %}
+                      <option>---Select Product Size---</option>
+                      <option value="S">S</option>
+                      <option value="M">M</option>
+                      <option value="L" selected>L</option>
+                      <option value="XL">XL</option>
+                      <option value="XXL">XXL</option>
+                    {% elif product.product_size == "XL" %}
+                      <option>---Select Product Size---</option>
+                      <option value="S">S</option>
+                      <option value="M">M</option>
+                      <option value="L">L</option>
+                      <option value="XL" selected>XL</option>
+                      <option value="XXL">XXL</option>
+                    {% elif product.product_size == "XXL" %}
+                      <option>---Select Product Size---</option>
+                      <option value="S">S</option>
+                      <option value="M">M</option>
+                      <option value="L">L</option>
+                      <option value="XL">XL</option>
+                      <option value="XXL" selected>XXL</option>
+                    {% endif %}
+                  </select>
+                  <select name="product_color" class="u-full-width bg-light">
+                    {% if product.product_color == "Red" %}
+                      <option>---Select Product Color---</option>
+                      <option value="Red" selected>Red</option>
+                      <option value="White">White</option>
+                      <option value="Black">Black</option>
+                      <option value="Yellow">Yellow</option>
+                    {% elif product.product_color == "White" %}
+                      <option>---Select Product Color---</option>
+                      <option value="Red">Red</option>
+                      <option value="White" selected>White</option>
+                      <option value="Black">Black</option>
+                      <option value="Yellow">Yellow</option>
+                    {% elif product.product_color == "Black" %}
+                      <option>---Select Product Color---</option>
+                      <option value="Red">Red</option>
+                      <option value="White">White</option>
+                      <option value="Black" selected>Black</option>
+                      <option value="Yellow">Yellow</option>
+                    {% elif product.product_color == "Yellow" %}
+                      <option>---Select Product Color---</option>
+                      <option value="Red">Red</option>
+                      <option value="White">White</option>
+                      <option value="Black">Black</option>
+                      <option value="Yellow" selected>Yellow</option>
+                    {% endif %}
+                  </select>
+
+                  <input type="text" minlength="2" name="product_name" value={{product.product_name}} class="u-full-width bg-light"   >
+                  <img src="{{product.product_picture.url}}" style="width:100 px; height: 100px; ">
+                  Product Picture :<input type="file" name="product_picture"    >
+                  <textarea class="u-full-width bg-light" name="product_desc" style="height: 180px;" >{{product.product_desc}}</textarea>
+                  <input type="number" minlength="2" name="product_price" value={{product.product_price}} class="u-full-width bg-light"   >
+                </div>
+                
+                <button type="submit" name="submit" class="btn btn-dark btn-full btn-medium">Update Product </button>
+              
+          </div>
+        </div>
+      </div>
+    </section>
+</body>
+{% endblock %}

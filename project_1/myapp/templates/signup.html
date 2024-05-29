@@ -1,0 +1,64 @@
+{%extends 'header.html'%}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+<center>
+<h1>welcome to signup</h1>
+{% if msg %}
+    <b style="color: blue;">{{msg}}</b>
+{% endif %}
+<form method="post" action="{% url 'signup' %}" enctype="multipart/form-data">
+	{% csrf_token %}
+	<table>
+		<tr>
+			<td>First Name</td>
+			<td><input type="text" name="fname"></td>
+		</tr>
+		<tr>
+			<tr>
+			<td>Last Name</td>
+			<td><input type="text" name="lname"></td>
+		</tr>
+			<td>Email</td>
+			<td><input type="text" name="email"></td>
+		</tr>
+		<tr>
+			<td>Mobile</td>
+			<td><input type="text" name="mobile"></td>
+		</tr>
+		<tr>
+			<td>Address</td>
+			<td><textarea rows="5" cols="22" name="address"></textarea></td>
+		</tr>
+		<tr>
+			<td>password</td>
+			<td><input type="password" name="password"></td>
+		</tr>
+		<tr>
+			<td>confirm password</td>
+			<td><input type="password" name="cpassword"></td>
+		</tr>
+		<tr>
+			<td>Profile Picture</td>
+			<td><input type="file" name="profile_picture"></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+				<input type="submit" value="Sign Up" class="btn btn-primary">
+				
+			</td>
+		</tr>
+	</table>
+</form>
+</center>
+
+</body>
+</html>
+{% endblock %}

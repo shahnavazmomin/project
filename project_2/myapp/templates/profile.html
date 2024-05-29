@@ -1,0 +1,67 @@
+{% extends 'header.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+  </head>
+  <body>
+
+    <section class="site-banner jarallax padding-large" style="background: url({% static 'images/hero-image.jpg' %}) no-repeat; background-position: top;">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 class="page-title">Profile</h1>
+            <div class="breadcrumbs">
+              <span class="item">
+                <a href="index.html">Home /</a>
+              </span>
+              <span class="item">Profile</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-information padding-large">
+      <div class="container">
+        <div class="row">
+         
+          <div class="col-md-12">
+            <div class="contact-information">
+              <div class="section-header">
+                <h2 class="section-title">Profile</h2>
+              </div>
+              {% if msg %}
+                <b style="color: blue;">{{msg}}</b>
+              {% endif %}
+              <form name="contactform" action="{% url 'profile' %}" method="post" class="contact-form" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-item">
+                  <input type="text" minlength="2" name="fname" value="{{user.fname}}" placeholder="First Name" class="u-full-width bg-light" required>
+                  <input type="text" minlength="2" name="lname" value="{{user.lname}}" placeholder="Last Name" class="u-full-width bg-light" required>
+                  <input type="text" name="email"  value="{{user.email}}" placeholder="E-mail" class="u-full-width bg-light" required>
+                  <input type="mobile" minlength="2" name="mobile" value="{{user.mobile}}" placeholder="Mobile" class="u-full-width bg-light" required>
+                  <tr>
+                  <td>Profile Picture</td>
+                  <td><input type="file" name="profile_picture"></td>
+                  </tr> 
+                  <tr>
+                  <td colspan="2" align="center">
+                  <img src="{{user.profile_picture.url}}" style="width:100px;height: 100px">
+                  </td>
+                  </tr>
+                  <textarea class="u-full-width bg-light" name="address" placeholder="Address" style="height: 180px;" required>{{user.address}}`</textarea>
+                </div>
+                
+                <button type="submit" name="submit" class="btn btn-dark btn-full btn-medium">Update Profile </button>
+              </form>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</body>
+{% endblock %}
